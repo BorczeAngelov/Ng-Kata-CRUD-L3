@@ -30,4 +30,16 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(
       ProductPageActions.deleteProduct({ productId: product.id }))
   }
+
+  create() {
+
+    const newProduct: Product = {
+      id: 0,
+      productName: 'New product',
+      description: 'Description of the new product'
+    }
+
+    this.store.dispatch(
+      ProductPageActions.createProduct({ product: newProduct }))
+  }
 }

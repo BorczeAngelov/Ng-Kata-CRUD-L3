@@ -36,12 +36,28 @@ export const productReducer = createReducer<ProductState>(
             currentProductId: action.currentProductId
         };
     }),
-    on(ProductApiActions.deleteProductSuccess, (state, action): ProductState => {
-        const updatedProducts = state.products.filter(item => item.id != action.productId)
+    on(ProductApiActions.createProductSuccess, (state, action): ProductState => {
+        const updatedProducts = state.products.concat(action.product)
         return {
             ...state,
             products: updatedProducts,
-            currentProductId: null,
+            currentProductId: action.product.id,
+            error: ''
+        }
+    }),
+    on(ProductApiActions.createProductFailure, (state, action): ProductState => {
+        return {
+            ...state,
+            error: action.error
+        }
+    }),
+    on(ProductApiActions.deleteProductSuccess, (state, action): ProductState => {
+        const updatedProducts = state.products.filter(item => item.id != action.productId)
+        const newCurrnetProductId = (state.currentProductId != action.productId) ? state.currentProductId : null;
+        return {
+            ...state,
+            products: updatedProducts,
+            currentProductId: newCurrnetProductId,
             error: ''
         }
     }),

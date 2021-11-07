@@ -1,11 +1,17 @@
 <h2>Product-list Component!</h2>
 
 
+<button (click)="create()">
+    Create new product
+</button>
+
 <div *ngFor="let product of (products$ | async)">
-    
-        <button (click)="delete(product)">
-            X
-        </button>
+
+    <button (click)="delete(product)">
+        X
+    </button>
+
+    <label>ID: {{product.id}}</label>
 
     <button (click)="productSelected(product)">
         {{product.productName }}
