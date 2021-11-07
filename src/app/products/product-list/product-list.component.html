@@ -2,8 +2,8 @@
 
 
 <div *ngFor="let product of (products$ | async)">
-    
-    <button>
+
+    <button (click)="productSelected(product)">
         {{product.productName }}
     </button>
 </div>

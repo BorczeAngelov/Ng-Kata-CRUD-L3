@@ -29,5 +29,11 @@ export const productReducer = createReducer<ProductState>(
             products: [],
             error: action.error
         }
-    })
+    }),
+    on(ProductPageActions.setCurrentProduct, (state, action): ProductState => {
+        return {
+            ...state,
+            currentProductId: action.currentProductId
+        };
+    }),
 );

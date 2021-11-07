@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Product } from '../product';
-import { ProductService } from '../product.service';
-import { State, getProducts } from '../state';
-import { ProductPageActions } from '../state/actions'
+import { getProducts, State } from '../state';
+import { ProductPageActions } from '../state/actions';
 
 @Component({
   selector: 'app-product-list',
@@ -20,5 +19,13 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(ProductPageActions.loadProducts());
 
     this.products$ = this.store.select(getProducts);
+  }
+
+  productSelected(product: Product) {
+    if (product) {
+
+      this.store.dispatch(
+        ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
+    }
   }
 }
