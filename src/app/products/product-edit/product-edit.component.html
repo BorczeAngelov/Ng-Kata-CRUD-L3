@@ -1,9 +1,10 @@
-<h3>Product-edit Component!</h3>
 
 <div *ngIf="selectedProduct">
 
     <h2>{{selectedProduct.productName | uppercase}} Details</h2>
-    <div><span>id: </span>{{selectedProduct.id}}</div>
+
+    <div><label>id: {{selectedProduct.id}}</label></div>
+
     <div>
         <label>Product name: </label>
         <input [(ngModel)]="selectedProduct.productName" placeholder="Product name">
@@ -22,7 +23,7 @@
         </span>
 
         <span>
-            <button style="width:80px" (click)="deleteProduct()">
+            <button (click)="deleteProduct()">
                 Delete
             </button>
         </span>
