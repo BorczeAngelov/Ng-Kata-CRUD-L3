@@ -12,12 +12,16 @@ import { ProductData } from './products/product-data';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { productReducer } from './products/state/product.reducer';
 import { ProductEffects } from './products/state/product.effects';
+import { ProductEditComponent } from './products/product-edit/product-edit.component';
+import { environment } from '../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductEditComponent
   ],
   imports: [
     BrowserModule,
@@ -25,8 +29,13 @@ import { ProductEffects } from './products/state/product.effects';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({
+      name: 'CRUD Kata level 3',
+      maxAge: 25,
+      logOnly: environment.production
+    }),
     EffectsModule.forRoot([]),
-    
+
     StoreModule.forFeature('products', productReducer),
     EffectsModule.forFeature([ProductEffects])
   ],
