@@ -1,21 +1,54 @@
-<h2>Product-list Component!</h2>
+<h2 style="text-align-last: center;">Product-list Component!</h2>
 
-<button class="add-button" (click)="create()">
-    Create new product
-</button>
+<div class="row">
+    <div class="column">
 
-<ul class="products">
-    <li *ngFor="let product of (products$ | async)">
+        <h3>All Products</h3>
 
-        <a (click)="productSelected(product)">
-
-            <span class="badge">ID: {{product.id}}</span>
-
-            {{product.productName }}
-        </a>
-        
-        <button (click)="delete(product)" class="delete">
-            X
+        <button class="add-button" (click)="create()">
+            Create new product
         </button>
-    </li>
-</ul>
+
+        <ul class="products">
+            <li *ngFor="let product of (products$ | async)">
+
+                <a (click)="productSelected(product)">
+
+                    <span class="badge">ID: {{product.id}}</span>
+
+                    {{product.productName }}
+                </a>
+
+                <button (click)="delete(product)" class="delete">
+                    X
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="column">
+
+        <h3>Filtered Products</h3>
+
+        <div>
+            <label for="search-box">Filter</label>
+            <input #searchBox id="search-box" [(ngModel)]='listFilter' (input)="filter()" />
+        </div>
+
+        <ul class="products">
+            <li *ngFor="let product of (filteredProducts$ | async)">
+
+                <a (click)="productSelected(product)">
+
+                    <span class="badge">ID: {{product.id}}</span>
+
+                    {{product.productName }}
+                </a>
+
+                <button (click)="delete(product)" class="delete">
+                    X
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

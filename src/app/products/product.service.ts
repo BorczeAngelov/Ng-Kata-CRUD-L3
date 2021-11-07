@@ -31,6 +31,21 @@ export class ProductService {
       );
   }
 
+  searchProducts(term: string): Observable<Product[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return this.getProducts();
+    }
+
+    return this.http.get<Product[]>(`${this.productsUrl}/?productName=${term}`)
+      .pipe(
+        tap(x => x.length ?
+          console.log(`found products matching "${term}"`) :
+          console.log(`no products matching "${term}"`)),
+        catchError(this.handleError)
+      );
+  }
+
   updateProduct(product: Product): Observable<Product> {
     const url = `${this.productsUrl}/${product.id}`;
     return this.http.put<Product>(url, product, { headers: this.headers })
