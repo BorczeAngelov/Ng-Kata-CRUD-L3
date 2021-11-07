@@ -11,7 +11,7 @@ import { ProductPageActions } from '../state/actions';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products$: Observable<Product[]> | undefined;
+  products$?: Observable<Product[]>;
 
   constructor(private store: Store<State>) { }
 
@@ -22,10 +22,12 @@ export class ProductListComponent implements OnInit {
   }
 
   productSelected(product: Product) {
-    if (product) {
+    this.store.dispatch(
+      ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
+  }
 
-      this.store.dispatch(
-        ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
-    }
+  delete(product: Product) {
+    this.store.dispatch(
+      ProductPageActions.deleteProduct({ productId: product.id }))
   }
 }

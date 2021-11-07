@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { Product } from './product';
 })
 export class ProductService {
   private productsUrl = 'api/products';
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +22,14 @@ export class ProductService {
       );
   }
 
+  deleteProduct(id: number): Observable<{}> {    
+    const url = `${this.productsUrl}/${id}`;
+    return this.http.delete<Product>(url, { headers: this.headers })
+      .pipe(
+        tap(data => console.log('deleteProduct: ' + id)),
+        catchError(this.handleError)
+      );
+  }
 
   private handleError(err: any) {
     // in a real world app, we may send the server to some remote logging infrastructure

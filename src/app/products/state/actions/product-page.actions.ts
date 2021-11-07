@@ -8,3 +8,9 @@ export const setCurrentProduct = createAction(
     '[Product Page] Set Current Product',
     props<{ currentProductId: number }>()
 );
+
+
+export const deleteProduct = createAction(
+    '[Product Page] Delete Product',
+    props<{ productId: number }>()
+);

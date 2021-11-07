@@ -10,3 +10,13 @@ export const loadProductsFailure = createAction(
     '[Product API] Load Failure',
     props<{ error: string }>()
 );
+
+export const deleteProductSuccess = createAction(
+    '[Product API] Delete Product Success',
+    props<{ productId: number }>()
+);
+
+export const deleteProductFailure = createAction(
+    '[Product API] Delete Product Failure',
+    props<{ error: string }>()
+);

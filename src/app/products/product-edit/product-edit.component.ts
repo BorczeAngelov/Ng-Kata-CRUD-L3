@@ -20,6 +20,8 @@ export class ProductEditComponent implements OnInit {
       data => {
         if (data)
           this.selectedProduct = data;
+        else
+          this.selectedProduct = undefined;
       }
     );
   }
