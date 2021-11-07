@@ -1,0 +1,9 @@
+<h2>Product-list Component!</h2>
+
+
+<div *ngFor="let product of (products$ | async)">
+    
+    <button>
+        {{product.productName }}
+    </button>
+</div>
