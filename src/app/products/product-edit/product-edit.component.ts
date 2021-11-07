@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from '../product';
 import { getCurrentProduct, State } from '../state';
+import { ProductPageActions } from '../state/actions';
 
 @Component({
   selector: 'app-product-edit',
@@ -15,15 +16,27 @@ export class ProductEditComponent implements OnInit {
   constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
-
     this.store.select(getCurrentProduct).subscribe(
       data => {
         if (data)
-          this.selectedProduct = data;
+          this.selectedProduct = { ...data };
         else
           this.selectedProduct = undefined;
       }
     );
   }
 
+  saveProduct() {
+    if (this.selectedProduct) {
+      this.store.dispatch(
+        ProductPageActions.updateProduct({ product: this.selectedProduct }))
+    }
+  }
+
+  deleteProduct() {
+    if (this.selectedProduct) {
+      this.store.dispatch(
+        ProductPageActions.deleteProduct({ productId: this.selectedProduct.id }))
+    }
+  }
 }

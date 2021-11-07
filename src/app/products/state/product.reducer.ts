@@ -51,6 +51,21 @@ export const productReducer = createReducer<ProductState>(
             error: action.error
         }
     }),
+    on(ProductApiActions.updateProductSuccess, (state, action): ProductState => {
+        const updatedProducts = state.products.map(item => item.id === action.product.id ? action.product : item)
+        return {
+            ...state,
+            products: updatedProducts,
+            currentProductId: action.product.id,
+            error: ''
+        }
+    }),
+    on(ProductApiActions.updateProductFailure, (state, action): ProductState => {
+        return {
+            ...state,
+            error: action.error
+        }
+    }),
     on(ProductApiActions.deleteProductSuccess, (state, action): ProductState => {
         const updatedProducts = state.products.filter(item => item.id != action.productId)
         const newCurrnetProductId = (state.currentProductId != action.productId) ? state.currentProductId : null;

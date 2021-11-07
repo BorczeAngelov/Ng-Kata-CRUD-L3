@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Product } from './product';
 
 @Injectable({
@@ -14,6 +14,15 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+  createProduct(product: Product): Observable<Product> {
+    const newProduct = { ...product, id: null };
+    return this.http.post<Product>(this.productsUrl, newProduct, { headers: this.headers })
+      .pipe(
+        tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.productsUrl)
       .pipe(
@@ -22,11 +31,12 @@ export class ProductService {
       );
   }
 
-  createProduct(product: Product): Observable<Product> {
-    const newProduct = { ...product, id: null };
-    return this.http.post<Product>(this.productsUrl, newProduct, { headers: this.headers })
+  updateProduct(product: Product): Observable<Product> {
+    const url = `${this.productsUrl}/${product.id}`;
+    return this.http.put<Product>(url, product, { headers: this.headers })
       .pipe(
-        tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+        tap(() => console.log('updateProduct: ' + product.id)),
+        map(() => product),
         catchError(this.handleError)
       );
   }

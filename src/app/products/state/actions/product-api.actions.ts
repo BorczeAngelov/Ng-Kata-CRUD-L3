@@ -21,6 +21,17 @@ export const loadProductsFailure = createAction(
     props<{ error: string }>()
 );
 
+
+export const updateProductSuccess = createAction(
+    '[Product API] Update Product Success',
+    props<{ product: Product }>()
+);
+
+export const updateProductFailure = createAction(
+    '[Product API] Update Product Failure',
+    props<{ error: string }>()
+);
+
 export const deleteProductSuccess = createAction(
     '[Product API] Delete Product Success',
     props<{ productId: number }>()

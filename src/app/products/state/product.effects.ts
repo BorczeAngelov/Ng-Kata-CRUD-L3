@@ -40,6 +40,20 @@ export class ProductEffects {
             )
     });
 
+    updateProduct$ = createEffect(() => {
+        return this.actions$
+            .pipe(
+                ofType(ProductPageActions.updateProduct),
+                concatMap(action =>
+                    this.productService.updateProduct(action.product)
+                        .pipe(
+                            map(() => ProductApiActions.updateProductSuccess({ product: action.product })),
+                            catchError(error => of(ProductApiActions.updateProductFailure({ error })))
+                        )
+                )
+            )
+    });
+
     deleteProduct$ = createEffect(() => {
         return this.actions$
             .pipe(

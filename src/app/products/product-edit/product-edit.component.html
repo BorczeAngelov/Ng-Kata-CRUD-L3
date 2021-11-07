@@ -1,12 +1,30 @@
-<p>product-edit works!</p>
+<h3>Product-edit Component!</h3>
 
+<div *ngIf="selectedProduct">
 
-<div>
-    <button *ngIf="selectedProduct">
-        {{selectedProduct.productName }}
-    </button>
+    <h2>{{selectedProduct.productName | uppercase}} Details</h2>
+    <div><span>id: </span>{{selectedProduct.id}}</div>
+    <div>
+        <label>Product name: </label>
+        <input [(ngModel)]="selectedProduct.productName" placeholder="Product name">
+    </div>
 
-    <p>{{selectedProduct?.description}}</p>
+    <div>
+        <label>Description: </label>
+        <input [(ngModel)]="selectedProduct.description" placeholder="Description">
+    </div>
 
-    <label>ID: {{selectedProduct?.id}}</label>
+    <div>
+        <span>
+            <button style="width:80px;margin-right:10px" (click)="saveProduct()">
+                Save
+            </button>
+        </span>
+
+        <span>
+            <button style="width:80px" (click)="deleteProduct()">
+                Delete
+            </button>
+        </span>
+    </div>
 </div>
