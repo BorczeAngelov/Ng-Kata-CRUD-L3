@@ -11,6 +11,7 @@ import { ProductPageActions } from '../state/actions';
 })
 export class ProductEditComponent implements OnInit {
   selectedProduct?: Product;
+  originalData?: Product;
 
 
   constructor(private store: Store<State>) { }
@@ -18,10 +19,14 @@ export class ProductEditComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getCurrentProduct).subscribe(
       data => {
-        if (data)
+        if (data) {
+          this.originalData = data;
           this.selectedProduct = { ...data };
-        else
+        }
+        else {
+          this.originalData = undefined;
           this.selectedProduct = undefined;
+        }
       }
     );
   }
@@ -37,6 +42,16 @@ export class ProductEditComponent implements OnInit {
     if (this.selectedProduct) {
       this.store.dispatch(
         ProductPageActions.deleteProduct({ productId: this.selectedProduct.id }))
+    }
+  }
+
+  revertChanges() {
+
+    if (this.originalData) {
+      this.selectedProduct = { ...this.originalData }
+    }
+    else {
+      this.selectedProduct = undefined;
     }
   }
 }
